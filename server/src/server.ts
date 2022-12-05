@@ -1,5 +1,3 @@
-// API SERVER FILE
-
 import express, { Application, Request, Response } from 'express';
 
 const port = 2000;
