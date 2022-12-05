@@ -9,6 +9,16 @@ async function authDatabase() {
   }
 }
 
-authDatabase().then(() => {
-    console.log('DATABASE CONNECT');
-});
+
+async function migration() {
+
+}
+
+// If param is dbcheck program only runs connexion function
+// Otherwise runs connexion and migration functions
+if (process.argv[2] === 'dbcheck') {
+  authDatabase();
+} else {
+  authDatabase();
+  migration();
+}
