@@ -1,4 +1,5 @@
 import sequelize from './instance';
+import Seminary from './models/seminary';
 
 async function authDatabase() {
   try {
@@ -10,9 +11,14 @@ async function authDatabase() {
 }
 
 
-async function migration() {
-
+async function SeminaryMigration() {
+ await Seminary.sync();
 }
+
+async function migration() {
+  await SeminaryMigration();
+}
+
 
 // If param is dbcheck program only runs connexion function
 // Otherwise runs connexion and migration functions
