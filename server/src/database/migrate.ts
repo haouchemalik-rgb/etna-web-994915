@@ -1,5 +1,7 @@
 import sequelize from './instance';
+
 import Users from './models/Users';
+import Channels from './models/Channels'
 
 async function authDatabase() {
   try {
@@ -13,6 +15,7 @@ async function authDatabase() {
 
 async function migration() {
   await Users.sync();
+  await Channels.sync();
 }
 
 // If param is dbcheck program only runs connexion function
