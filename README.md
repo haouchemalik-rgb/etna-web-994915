@@ -1,2 +1,0 @@
-# Projet Inclusion Conseil
-> [Cliquez pour voir les objectifs](https://dl.etna-alternance.net/activities/SDC-DWEB/005/project/Code%20Camp%20Web/public/défi_inclusion_conseil.pdf?md5=TnIs_A-4H7vT_zI2aT3fwg&expires=1670249376)
