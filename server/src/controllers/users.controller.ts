@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import getByIdUsers from '../services/users.service';
+import { getByIdUsers } from '../services/users.service';
 
 async function getById(req: Request, res: Response) {
   const user: any = await getByIdUsers(req, res);
@@ -8,4 +8,7 @@ async function getById(req: Request, res: Response) {
   } else {
     res.status(500).json(user.data);
   }
+}
+export {
+  getById,
 }

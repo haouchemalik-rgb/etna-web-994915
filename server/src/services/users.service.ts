@@ -22,4 +22,6 @@ async function getByIdUsers(req: Request, res: Response) {
   });
 }
 
-export default getByIdUsers;
+export {
+  getByIdUsers,
+} 
