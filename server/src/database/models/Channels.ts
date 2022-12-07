@@ -13,10 +13,11 @@ const Channels = sequelize.define('Channels', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  idMembers: {
+  messages: {
     type: DataTypes.JSON,
-    allowNull: false, 
-  },
+    allowNull: true,
+    default: {},
+  }
 });
 
 export default Channels;

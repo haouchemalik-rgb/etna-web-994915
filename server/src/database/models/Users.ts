@@ -33,7 +33,12 @@ const Users = sequelize.define('Users', {
   password: {
     type: DataTypes.STRING,
     allowNull: true,
-  }
+  },
+  channels: {
+    type: DataTypes.JSON,
+    allowNull: true,
+    default: {},
+  }  
 });
 
 export default Users;
