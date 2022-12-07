@@ -1,8 +1,12 @@
 import { Request, Response } from 'express';
 import { 
   getByIdUsers, getAllUsers,
-  registerUser, deleteUser, updateUser,
- } from '../services/users.service';
+  registerUser, deleteUser,
+  updateUser, loginUser,
+  checkPassUser,
+} from '../services/users.service';
+
+const jwt = require('jsonwebtoken');
 
 async function getById(req: Request, res: Response) {
   await getByIdUsers(req)
@@ -24,7 +28,7 @@ async function getAll(req: Request, res: Response) {
     });
 }
 
-async function update(req: Request, res: Response) {
+async function updateById(req: Request, res: Response) {
   await updateUser(req)
     .then((data) => {
       if (!data.err) {
@@ -64,9 +68,64 @@ async function register(req: Request, res: Response) {
     })
 }
 
+async function login(req: Request, res: Response) {
+  await loginUser(req)
+    .then((data) => {
+      if (!data.err) {
+        res
+          .cookie('access_token', data.data, {
+            httpOnly: true,
+            maxAge: 1000 * 3600 * 24,
+          })
+          .status(200)
+          .json({
+            message : 'Logged in successfully',
+          });
+      } else {
+        res.status(403).json({message: data.data})
+      }
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    })
+}
+
+function logout (req: Request, res: Response) {
+  res.clearCookie('access_token').status(200).json({
+    message: 'Logged out successfully',
+  })
+}
+
+async function checkPass(req: Request, res: Response) {
+  await checkPassUser(req)
+    .then((data) => {
+      if (!data.err) {
+        res.status(200).json({
+          message: data.data,
+        });
+      } else {
+        res.status(403).json({
+          message: data.data,
+        });
+      }
+    })
+    .catch((error) => {
+      res.status(500).json(error);
+    }); 
+}
+
+function jwtData(req: Request, res: Response) {
+  const token = req.cookies.access_token;
+  const tokenDecoded = jwt.decode(token);
+  res.status(200).json({
+    id: tokenDecoded.id,
+  });
+}
 
 export {
   getById, getAll,
   register, deleteById,
-  update,
+  updateById, login,
+  logout, checkPass,
+  jwtData,
 }

@@ -34,5 +34,6 @@ async function deleteChannel(req: Request) {
 }
 
 export {
-  getByIdChannels, getAllChannels
+  getByIdChannels, getAllChannels,
+  deleteChannel,
 } 

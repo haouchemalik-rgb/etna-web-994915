@@ -2,6 +2,7 @@ import { Request } from 'express';
 import Users from '../database/models/Users';
 
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 
 async function getByIdUsers(req: Request) {
@@ -114,8 +115,63 @@ async function registerUser(req: Request) {
   }
 }
 
+async function loginUser(req: Request) {
+  const userNameExist = Users.findOne({
+    where: {
+      userName: req.body.identifiant,
+    },
+  });
+  const emailExists = Users.findOne({
+    where: {
+      email: req.body.identifiant,
+    },
+  });
+  if (!emailExists && !userNameExist) {
+    return {
+      data: 'This account doesn\'t exist',
+      err: true,
+    }
+  }
+  const passValid = bcrypt.compareSync(req.body.password, emailExists? emailExists.password: userNameExist.password);
+  if (passValid) {
+    const token = jwt.sign({
+      id: emailExists? emailExists.id : userNameExist.id,
+    }, process.env.SECRET_KEY, {
+      expiresIn: '24h',
+    });
+    return {
+      data: token,
+      err: false,
+    };
+  }
+  return {
+    data: 'Wrong password',
+    err: true,
+  };
+}
+
+async function checkPassUser(req: Request) {
+  const userExists = await Users.findOne({
+    where: {
+      id: req.params.id,
+    },
+  });
+  const passValid = bcrypt.compareSync(req.body.password, userExists.password);
+  if (userExists && passValid) {
+    return {
+      data: 'valid',
+      err: false,
+    };
+  }
+  return {
+    data: 'invalid',
+    err: true,
+  };
+}
+
 export {
   getByIdUsers, getAllUsers,
   registerUser, deleteUser,
-  updateUser,
+  updateUser, loginUser,
+  checkPassUser,
 } 
