@@ -1,6 +1,5 @@
 import { Request, Response } from 'express'
-import Seminary from '../src/database/models/seminary'
-import { deleteSeminary, getByIdSeminary, updateSeminaryById, createSeminary } from '../service/seminaries.service'
+import { deleteSeminary, getByIdSeminary, updateSeminaryById, createSeminary, getAllSeminaries } from '../service/seminaries.service'
 
 export async function newSeminary(req: Request, res: Response) {
     try {
@@ -13,7 +12,7 @@ export async function newSeminary(req: Request, res: Response) {
 }
 
 
-export async function getById(req: Request, res: Response) {
+export async function getSeminaryId(req: Request, res: Response) {
     try {
         const UserbyId = await getByIdSeminary(req);
         res.status(200).json(UserbyId);
@@ -26,7 +25,7 @@ export async function getById(req: Request, res: Response) {
 
 export async function Allget(req: Request, res: Response) {
     try {
-        const allUser: any = await Seminary.getAllSeminaries(req);
+        const allUser: any = await getAllSeminaries(req);
         res.status(200).json(allUser);
     } catch (err) {
         res.status(500).json({ 'erreur de requète': err })

@@ -37,12 +37,9 @@ const Seminary = sequelize.define('Seminary',
       allowNull: false,
     },
     priority: {
-      types: DataTypes.STRING,
+      type: DataTypes.STRING,
       allowNull: false,
     },
-
-
-
   })
 
 export default Seminary;

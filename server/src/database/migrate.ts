@@ -1,6 +1,7 @@
 import sequelize from './instance';
 import Seminary from './models/seminary';
 import Users from './models/Users'
+import Task from './models/Task'
 
 async function authDatabase() {
   try {
@@ -19,10 +20,14 @@ async function UsersMigration() {
 await Users.sync();
 
 }
+async function TaskMigration() {
+  await Task.sync();
+}
 
 async function migration() {
   SeminaryMigration();
   UsersMigration();
+  TaskMigration();
 
 }
 
