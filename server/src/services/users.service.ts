@@ -2,7 +2,7 @@ import { Request } from 'express';
 import Users from '../database/models/Users';
 
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken')
 
 
 async function getByIdUsers(req: Request) {
@@ -85,16 +85,17 @@ async function updateUser(req: Request) {
 }
 
 async function registerUser(req: Request) {
-  const userNameExist = Users.findOne({
+  const userNameExist = await Users.findOne({
     where: {
       userName: req.body.userName,
     },
   });
-  const emailExists = Users.findOne({
+  const emailExists = await Users.findOne({
     where: {
       email: req.body.email,
     },
   });
+
   if (!userNameExist && !emailExists) {
     req.body.password = await bcrypt.hash(req.body.password, 13);
     await Users.create(req.body);

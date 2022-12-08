@@ -7,13 +7,13 @@ import {
 } from '../controllers/users.controller';
 import authJWT from '../middleware/authJwt';
 
-const expres = require('expres');
+const express = require('express');
 
-const UserRouter: Router = expres.Router();
+const UserRouter: Router = express.Router();
 
 UserRouter.get('/jwtData', authJWT, jwtData);
 UserRouter.get('/checkPass/:id', authJWT, checkPass)
-UserRouter.get('/login', login);
+UserRouter.post('/login', login);
 UserRouter.get('/logout', authJWT, logout);
 UserRouter.get('/', authJWT, getAll);
 UserRouter.get('/:id', authJWT, getById);
