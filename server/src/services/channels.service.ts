@@ -1,54 +1,42 @@
 import { Request } from 'express';
 import Channels from '../database/models/Channels';
 
-async function getByIdChannels(req: Request) {
-  const user = await Channels.findAll({
-    where: {
-      id: req.params.id,
-    },
-  });
-  return {
-    data: user,
-    err: false,
-  };
-}
-
 async function getAllChannels() {
-  const users: any = await Channels.findAll()
-  return {
-    data: users,
-    err: false,
-  };
+  const channels = await Channels.findAll();
+  return channels;
 }
 
-async function deleteChannel(req: Request) {
-  await Channels.delete({
+async function getByIdChannels(id: any) {
+  const channel = await Channels.findOne({
     where: {
-      id: req.params.id,
-    },
+      id: id
+    }
   });
-  return {
-    data: 'Resource deleted successfully',
-    err: false,
-  };
+  return channel;
 }
 
-async function registerChannel(req: Request) {
-  try {
-    await Channels.create(req.body);
-    return {
-      data: 'User created succesfully',
-      err: false,
-    }
-  } catch {
-    return {
-      data: 'Error on channel creation',
-      err: true,
-    }
-  }
+async function createChannels(body: any) {
+  const object = await Channels.create(body);
+  return object;
 }
+
+async function sendMessageChannel(id: any, body: any) {
+  const channel = await Channels.findOne({
+    where: {
+      id: id
+    }
+  });
+
+  channel.messages.push({'type': body.type, 'value': body.value});
+
+  await Channels.update({
+    "messages": channel.messages
+  }, { where: { id } });
+
+  return channel;
+}
+
 
 export {
-  getByIdChannels, getAllChannels,
-  deleteChannel, registerChannel
-} 
+  getAllChannels, getByIdChannels, createChannels, sendMessageChannel
+}
