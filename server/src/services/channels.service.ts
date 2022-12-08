@@ -33,7 +33,22 @@ async function deleteChannel(req: Request) {
   };
 }
 
+async function registerChannel(req: Request) {
+  try {
+    await Channels.create(req.body);
+    return {
+      data: 'User created succesfully',
+      err: false,
+    }
+  } catch {
+    return {
+      data: 'Error on channel creation',
+      err: true,
+    }
+  }
+}
+
 export {
   getByIdChannels, getAllChannels,
-  deleteChannel,
+  deleteChannel, registerChannel
 } 
