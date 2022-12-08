@@ -13,13 +13,13 @@ const UserRouter: Router = express.Router();
 
 UserRouter.get('/jwtData', authJWT, jwtData);
 UserRouter.get('/checkPass/:id', authJWT, checkPass)
-UserRouter.post('/login', login);
 UserRouter.get('/logout', authJWT, logout);
 UserRouter.get('/', authJWT, getAll);
 UserRouter.get('/:id', authJWT, getById);
 UserRouter.patch('/:id', authJWT, updateById);
 UserRouter.delete('/:id', authJWT, deleteById);
-UserRouter.post('/', register);
+UserRouter.post('/register', register);
+UserRouter.post('/login', login);
 
 export default UserRouter;
 

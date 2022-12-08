@@ -11,7 +11,7 @@ const jwt = require('jsonwebtoken');
 async function getById(req: Request, res: Response) {
   await getByIdUsers(req)
     .then((data) => {
-      res.status(200).json(data);
+      res.status(200).json(data.data);
     })
     .catch((error) => {
       res.status(500).json(error);
@@ -21,7 +21,7 @@ async function getById(req: Request, res: Response) {
 async function getAll(req: Request, res: Response) {
   await getAllUsers()
     .then((data) => {
-      res.status(200).json(data);
+      res.status(200).json(data.data);
     })
     .catch((error) => {
       res.status(500).json(error);
@@ -58,9 +58,9 @@ async function register(req: Request, res: Response) {
   await registerUser(req)
     .then((data) => {
       if (!data.err) {
-        res.status(201).json(data.data);
+        res.status(201).json({message: data.data});
       } else {
-        res.status(400).json(data.data);
+        res.status(400).json({message: data.data});
       }
     })
     .catch((error) => {
@@ -86,7 +86,7 @@ async function login(req: Request, res: Response) {
       }
     })
     .catch((error) => {
-      res.status(500).json(error);
+      res.status(500).json({message: 'Request error'});
     })
 }
 

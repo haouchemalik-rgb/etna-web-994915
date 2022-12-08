@@ -26,7 +26,7 @@ async function getAllUsers() {
 }
 
 async function deleteUser(req: Request) {
-  await Users.delete({
+  await Users.destroy({
     where: {
       id: req.params.id,
     },
@@ -42,7 +42,7 @@ async function updateUser(req: Request) {
   let emailExist: Boolean = false;
 
   if (req.body.userName) {
-    const userName = Users.findOne({
+    const userName = await Users.findOne({
       where: {
         userName: req.body.userName,
       },
@@ -51,7 +51,7 @@ async function updateUser(req: Request) {
   }
   
   if (req.body.email) {
-    const email = Users.findOne({
+    const email = await Users.findOne({
       where: {
         email: req.body.email,
       },
@@ -117,14 +117,14 @@ async function registerUser(req: Request) {
 }
 
 async function loginUser(req: Request) {
-  const userNameExist = Users.findOne({
+  const userNameExist = await Users.findOne({
     where: {
-      userName: req.body.identifiant,
+      userName: req.body.identifier,
     },
   });
-  const emailExists = Users.findOne({
+  const emailExists = await Users.findOne({
     where: {
-      email: req.body.identifiant,
+      email: req.body.identifier,
     },
   });
   if (!emailExists && !userNameExist) {
@@ -133,18 +133,22 @@ async function loginUser(req: Request) {
       err: true,
     }
   }
-  const passValid = bcrypt.compareSync(req.body.password, emailExists? emailExists.password: userNameExist.password);
+
+  const passValid = bcrypt.compareSync(req.body.password, emailExists? emailExists.password : userNameExist.password);
+
   if (passValid) {
     const token = jwt.sign({
       id: emailExists? emailExists.id : userNameExist.id,
     }, process.env.SECRET_KEY, {
       expiresIn: '24h',
     });
+
     return {
       data: token,
       err: false,
     };
   }
+
   return {
     data: 'Wrong password',
     err: true,

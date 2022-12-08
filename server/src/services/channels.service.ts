@@ -22,7 +22,7 @@ async function getAllChannels() {
 }
 
 async function deleteChannel(req: Request) {
-  await Channels.delete({
+  await Channels.destroy({
     where: {
       id: req.params.id,
     },
