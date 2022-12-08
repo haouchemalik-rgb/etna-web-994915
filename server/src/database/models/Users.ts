@@ -12,7 +12,7 @@ const Users = sequelize.define('Users', {
   admin: {
     type: DataTypes.BOOLEAN,
     allowNull: false,
-    default: false,
+    value: false,
   },
   firstName: {
     type: DataTypes.STRING,
@@ -28,16 +28,16 @@ const Users = sequelize.define('Users', {
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
   },
   channels: {
     type: DataTypes.JSON,
     allowNull: true,
-    default: {},
+    value: {},
   }  
 });
 
