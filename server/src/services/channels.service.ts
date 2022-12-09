@@ -27,7 +27,7 @@ async function sendMessageChannel(id: any, body: any) {
     }
   });
 
-  channel.messages.push({'type': body.type, 'value': body.value, 'authorId': id});
+  channel.messages.push({'type': body.type, 'value': body.value, 'authorId': body.authorId});
 
   await Channels.update({
     "messages": channel.messages
