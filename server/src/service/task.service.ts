@@ -1,5 +1,5 @@
 import { Request } from 'express'
-import Task from '../src/database/models/Task'
+import Task from '../database/models/Task'
 
 export async function createTask(req: Request) {
     const newCreate = await Task.create(req.body)
