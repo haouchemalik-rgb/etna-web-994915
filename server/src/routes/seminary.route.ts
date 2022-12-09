@@ -10,6 +10,6 @@ seminaryRouter.patch('/:id', patchSeminary);
 seminaryRouter.delete('/:id', deleteSeminaries);
 seminaryRouter.post('/', newSeminary);
 
-export default seminaryRouter
 
+export default seminaryRouter;
 
