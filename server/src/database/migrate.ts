@@ -1,4 +1,7 @@
 import sequelize from './instance';
+import Seminary from './models/seminary';
+import Users from './models/Users'
+import Task from './models/Task'
 
 import Users from './models/Users';
 import Channels from './models/Channels'
@@ -12,6 +15,17 @@ async function authDatabase() {
   }
 }
 
+
+async function SeminaryMigration() {
+await Seminary.sync();
+}
+async function UsersMigration() {
+await Users.sync();
+
+}
+async function TaskMigration() {
+  await Task.sync();
+}
 
 async function migration() {
   await Users.sync();
