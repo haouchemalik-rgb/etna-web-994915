@@ -2,8 +2,6 @@ import sequelize from './instance';
 import Seminary from './models/Seminary';
 import Users from './models/Users'
 import Task from './models/Task'
-
-import Users from './models/Users';
 import Channels from './models/Channels'
 
 async function authDatabase() {
@@ -15,27 +13,27 @@ async function authDatabase() {
   }
 }
 
-
-async function SeminaryMigration() {
-await Seminary.sync();
-}
-async function UsersMigration() {
-await Users.sync();
-
-}
-async function TaskMigration() {
-  await Task.sync();
-}
-
 async function migration() {
   await Users.sync();
   await Channels.sync();
+  await Seminary.sync();
+  await Task.sync();
+}
+
+async function migrateForce() {
+  await Users.sync({ force: true });
+  await Channels.sync({ force: true });
+  await Seminary.sync({ force: true });
+  await Task.sync({ force: true });
 }
 
 // If param is dbcheck program only runs connexion function
 // Otherwise runs connexion and migration functions
 if (process.argv[2] === 'dbcheck') {
   authDatabase();
+} else if (process.argv[2] === '-f'){
+  authDatabase();
+  migrateForce();
 } else {
   authDatabase();
   migration();
