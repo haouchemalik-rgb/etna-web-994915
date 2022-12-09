@@ -3,6 +3,9 @@ import Seminary from './models/seminary';
 import Users from './models/Users'
 import Task from './models/Task'
 
+import Users from './models/Users';
+import Channels from './models/Channels'
+
 async function authDatabase() {
   try {
     await sequelize.authenticate();
@@ -25,10 +28,8 @@ async function TaskMigration() {
 }
 
 async function migration() {
-  SeminaryMigration();
-  UsersMigration();
-  TaskMigration();
-
+  await Users.sync();
+  await Channels.sync();
 }
 
 // If param is dbcheck program only runs connexion function

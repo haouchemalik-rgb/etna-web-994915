@@ -8,6 +8,7 @@ import { Calendar, Customers, Kanban } from './pages';
 import './App.css';
 
 import { useStateContext } from './contexts/ContextProvider';
+import notifyMe from './Notification/Notification';
 
 const App = () => {
   const { currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
@@ -69,6 +70,7 @@ const App = () => {
           </div>
         </div>
       </BrowserRouter>
+      <button onclick={notifyMe()}>Notify me!</button>
     </div>
   );
 };
