@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { createTask, getByIdTask, getAllTask, deleteTask, updateTaskById } from '../service/task.service'
+import { createTask, getByIdTask, getAllTask, deleteTask, updateTaskById } from '../services/task.service'
 
 export async function newTask(req: Request, res: Response) {
     try {

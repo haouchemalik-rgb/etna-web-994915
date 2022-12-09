@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import Seminary from '../database/models/seminary'
+import Seminary from '../database/models/Seminary'
 
 export async function createSeminary(req: Request) {
     const newCreate = await Seminary.create(req.body)

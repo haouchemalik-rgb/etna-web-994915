@@ -1,5 +1,5 @@
 import sequelize from './instance';
-import Seminary from './models/seminary';
+import Seminary from './models/Seminary';
 import Users from './models/Users'
 import Task from './models/Task'
 

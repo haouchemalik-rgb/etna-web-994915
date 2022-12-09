@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { deleteSeminary, getByIdSeminary, updateSeminaryById, createSeminary, getAllSeminaries } from '../service/seminaries.service'
+import { deleteSeminary, getByIdSeminary, updateSeminaryById, createSeminary, getAllSeminaries } from '../services/seminaries.service'
 
 export async function newSeminary(req: Request, res: Response) {
     try {
