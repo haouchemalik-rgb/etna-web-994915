@@ -3,7 +3,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
-import { Navbar, Sidebar, ThemeSettings } from './components';
+import { Navbar, Sidebar, ThemeSettings, Login } from './components';
 import { Calendar, Customers, Kanban } from './pages';
 import './App.css';
 
@@ -13,9 +13,12 @@ const App = () => {
   const { currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
 
   return (
+    
     <div className={currentMode === 'Dark' ? 'dark' : ''}>
+      <Login/>
       <BrowserRouter>
-        <div className="flex relative dark:bg-main-dark-bg">
+        
+        <div className="flex relative object-cover dark:bg-main-dark-bg">
           <div className="fixed right-4 bottom-4" style={{ zIndex: '1000' }}>
             <TooltipComponent
               content="Settings"
