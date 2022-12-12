@@ -1,12 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
 
 import { Button } from '.';
 import { useStateContext } from '../contexts/ContextProvider';
+import { UserContext } from '../contexts/UserContext';
 import avatar from '../data/avatar.jpg';
 
 const UserProfile = () => {
   const { currentColor } = useStateContext();
+  const { user } = useContext(UserContext);
 
   return (
     <div className="nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96">
@@ -27,9 +29,9 @@ const UserProfile = () => {
           alt="user-profile"
         />
         <div>
-          <p className="font-semibold text-xl dark:text-gray-200"> Masthen Haouche </p>
-          <p className="text-gray-500 text-sm dark:text-gray-400">  Administrator   </p>
-          <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> info@gmail.com </p>
+          <p className="font-semibold text-xl dark:text-gray-200"> {user.lastName} {user.firstName} </p>
+          <p className="text-gray-500 text-sm dark:text-gray-400">  {user.admin? 'Administrateur' : 'Client'}   </p>
+          <p className="text-gray-500 text-sm font-semibold dark:text-gray-400"> {user.email} </p>
         </div>
       </div>
       <div className="mt-5">
