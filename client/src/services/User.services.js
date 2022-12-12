@@ -1,5 +1,11 @@
 import { api } from './ServiceHelper';
 
+export const getAllUsers = async () => {
+  return await api.get('/user/')
+    .then((res) => res)
+    .catch((err) => err.response);
+}
+
 export const loginUser = async (identifiant) => {
   return await api.post('/user/login', identifiant)
     .then((res) => res)

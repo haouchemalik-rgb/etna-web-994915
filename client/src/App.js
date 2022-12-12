@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
@@ -10,7 +10,6 @@ import './App.css';
 import { useStateContext } from './contexts/ContextProvider';
 import notifyMe from './Notification/Notification';
 import { UserContext } from './contexts/UserContext';
-import { getUser } from './services/User.services';
 
 const App = () => {
   const { currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();

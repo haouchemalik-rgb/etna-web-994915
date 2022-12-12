@@ -2,13 +2,11 @@ import React, { useContext } from 'react';
 import { MdOutlineCancel } from 'react-icons/md';
 
 import { Button } from '.';
-import { useStateContext } from '../contexts/ContextProvider';
 import { UserContext } from '../contexts/UserContext';
 import avatar from '../data/avatar.jpg';
 import { logout } from '../services/User.services';
 
 const UserProfile = () => {
-  const { currentColor } = useStateContext();
   const { user, setUser } = useContext(UserContext);
 
   return (
