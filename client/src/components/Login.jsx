@@ -37,22 +37,22 @@ const Login = () => {
   }
 
   return (
-    <div class='flex fixed inset-0 items-center justify-center bg-gray-700 bg-opacity-50 w-full h-screen'>
-      <div class='flex flex-col justify-center items-center pt-5 pb-5 pl-10 pr-10 bg-white rounded-xl shadow-md shadow-black-500'>
+    <div className='flex fixed inset-0 items-center justify-center bg-gray-700 bg-opacity-50 w-full h-screen'>
+      <div className='flex flex-col justify-center items-center pt-5 pb-5 pl-10 pr-10 bg-white rounded-xl shadow-md shadow-black-500'>
         <h1 className='mb-4 text-xl'>Connection</h1>
-        <form action="submit" class='flex flex-col justify-evenly items-center'>
+        <form action="submit" className='flex flex-col justify-evenly items-center'>
           <input onChange={(e) => setIdentifier(e.target.value)}
             type="text" name='identifiant' placeholder='Identifiant'
-            class='mb-3 pl-1 pr-1 bg-gray-100 border rounded-lg'
+            className='mb-3 pl-1 pr-1 bg-gray-100 border rounded-lg'
           />
           <input onChange={(e) => setPassword(e.target.value)}
             type="password" name="password" placeholder='Mot-de-passe'
-            class='mb-5 pl-1 pr-1 bg-gray-100 border rounded-lg'
+            className='mb-5 pl-1 pr-1 bg-gray-100 border rounded-lg'
           />
           <button
             onClick={login}
             type='button'
-            class='bg-gradient-to-l from-violet-400 to-pink-500
+            className='bg-gradient-to-l from-violet-400 to-pink-500
              text-white rounded-lg h-[30px] w-[150px]
              hover:bg-gradient-to-r'
           >

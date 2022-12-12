@@ -35,7 +35,7 @@ const UserProfile = () => {
       </div>
       <div className="mt-5">
         <button
-          class='bg-gradient-to-l from-violet-400 to-pink-500
+          className='bg-gradient-to-l from-violet-400 to-pink-500
           text-white rounded-lg h-[40px] w-full
           hover:bg-gradient-to-r'
           onClick={() => {

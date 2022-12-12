@@ -72,7 +72,7 @@ const App = () => {
               </div>
             </div>
           </div>
-          <button onclick={notifyMe()}>Notify me!</button>
+          <button onClick={notifyMe()}>Notify me!</button>
           <div hidden={user? true : false}>
             <Login/>
           </div>
