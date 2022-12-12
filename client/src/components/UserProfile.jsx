@@ -5,10 +5,11 @@ import { Button } from '.';
 import { useStateContext } from '../contexts/ContextProvider';
 import { UserContext } from '../contexts/UserContext';
 import avatar from '../data/avatar.jpg';
+import { logout } from '../services/User.services';
 
 const UserProfile = () => {
   const { currentColor } = useStateContext();
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
 
   return (
     <div className="nav-item absolute right-1 top-16 bg-white dark:bg-[#42464D] p-8 rounded-lg w-96">
@@ -35,13 +36,18 @@ const UserProfile = () => {
         </div>
       </div>
       <div className="mt-5">
-        <Button
-          color="white"
-          bgColor={currentColor}
-          text="Logout"
-          borderRadius="10px"
-          width="full"
-        />
+        <button
+          class='bg-gradient-to-l from-violet-400 to-pink-500
+          text-white rounded-lg h-[40px] w-full
+          hover:bg-gradient-to-r'
+          onClick={() => {
+            logout();
+            setUser(null);
+            window.location.reload(false);
+          }}
+        >
+          Logout
+        </button>
       </div>
     </div>
 

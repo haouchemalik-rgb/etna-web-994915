@@ -80,8 +80,6 @@ const App = () => {
         </BrowserRouter>
         
       </div>
-      
-        
     </UserContext.Provider>
   );
 };

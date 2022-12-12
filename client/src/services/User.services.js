@@ -22,3 +22,9 @@ export const getUser = async () => {
     return res.response;
   }
 }
+
+export const logout = async () => {
+  return await api.get('/user/logout/')
+    .then((res) => res)
+    .catch((err) => err.response);
+}
