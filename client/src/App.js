@@ -6,6 +6,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 import { Navbar, Sidebar, ThemeSettings, Login } from './components';
 import { Calendar, Customers, Kanban } from './pages';
 import './App.css';
+import Message from './pages/message';
 
 import { useStateContext } from './contexts/ContextProvider';
 import notifyMe from './Notification/Notification';
@@ -66,6 +67,7 @@ const App = () => {
                   <Route path="/customers" element={<Customers />} />
 
                   {/* apps  */}
+                  <Route path="/message" element={<Message />} />
                   <Route path="/kanban" element={<Kanban />} />
                   <Route path="/calendar" element={<Calendar />} />
                 </Routes>
