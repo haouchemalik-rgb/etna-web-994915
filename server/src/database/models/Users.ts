@@ -9,6 +9,11 @@ const Users = sequelize.define('Users', {
     primaryKey: true,
     unique:true,
   },
+  admin: {
+    type: DataTypes.BOOLEAN,
+    allowNull: false,
+    defaultValue: false,
+  },
   firstName: {
     type: DataTypes.STRING,
     allowNull: false,
@@ -23,12 +28,17 @@ const Users = sequelize.define('Users', {
   },
   email: {
     type: DataTypes.STRING,
-    allowNull: true,
+    allowNull: false,
   },
   password: {
     type: DataTypes.STRING,
-    allowNull: true,
-  }
+    allowNull: false,
+  },
+  channels: {
+    type: DataTypes.JSON,
+    allowNull: false,
+    defaultValue: [],
+  }  
 });
 
 export default Users;

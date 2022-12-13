@@ -25,7 +25,6 @@ export const gridOrderImage = (props) => (
   </div>
 );
 
-
 export const kanbanGrid = [
   { headerText: 'To Do',
     keyField: 'Open',
@@ -65,6 +64,7 @@ const customerGridStatus = (props) => (
     <p>{props.Status}</p>
   </div>
 );
+
 export const colorMappingData = [
   [
     { x: 'Jan', y: 6.96 },
@@ -100,7 +100,6 @@ export const rangeColorMapping = [
     start: '21',
     end: '30',
     colors: colorMappingData[3] },
-
 ];
 
 export const customersGrid = [
