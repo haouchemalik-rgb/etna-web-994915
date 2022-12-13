@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import Channels from '../database/models/Channels';
 import Users from '../database/models/Users';
 
 const bcrypt = require('bcrypt');
@@ -174,9 +175,59 @@ async function checkPassUser(req: Request) {
   };
 }
 
+async function addUserToChannel(userId: any, channelId: any) {
+  const user = await Users.findOne({
+    where: {
+      id: userId
+    }
+  });
+
+  if (channelId in user.channels) {
+    return {err : true, data: 'already add to this channel'}
+  } else {
+    const channel = await Channels.findOne({
+      where: {
+        id: channelId
+      }
+    })
+
+    if (channel) {
+      user.channels.push(channelId);
+
+      await Users.update({
+        "channels": user.channels
+      }, { where: { "id": userId } });
+    } else {
+      return {err : true, data: 'channel doesn\'t exist'}
+    }
+  }
+
+  return user;
+}
+
+async function removeUserFromChannel(userId: any, channelId: any) {
+  const user = await Users.findOne({
+    where: {
+      id: userId
+    }
+  });
+
+  for (let i = 0; i < user.channels.length; i++) {
+    if (user.channels[i] === channelId) {
+      user.channels.splice(i, 1);
+    }
+  }
+
+  await Users.update({
+    "channels": user.channels
+  }, { where: { "id": userId } });
+
+  return user;
+}
+
 export {
   getByIdUsers, getAllUsers,
   registerUser, deleteUser,
   updateUser, loginUser,
-  checkPassUser,
+  checkPassUser, addUserToChannel, removeUserFromChannel
 } 

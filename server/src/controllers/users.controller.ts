@@ -3,7 +3,7 @@ import {
   getByIdUsers, getAllUsers,
   registerUser, deleteUser,
   updateUser, loginUser,
-  checkPassUser,
+  checkPassUser, addUserToChannel, removeUserFromChannel
 } from '../services/users.service';
 
 const jwt = require('jsonwebtoken');
@@ -122,10 +122,25 @@ function jwtData(req: Request, res: Response) {
   });
 }
 
+async function addToChannel(req: Request, res: Response) {
+  const user = await addUserToChannel(req.params.id, req.params.channelId);
+
+  if (user.err) {
+    res.status(500).send(user.data);
+  } else {
+    res.status(200).json(user);
+  }
+}
+
+async function removeFromChannel(req: Request, res: Response) {
+  const user = await removeUserFromChannel(req.params.id, req.params.channelId);
+  res.status(200).json(user);
+}
+
 export {
   getById, getAll,
   register, deleteById,
   updateById, login,
   logout, checkPass,
-  jwtData,
+  jwtData, addToChannel, removeFromChannel
 }
