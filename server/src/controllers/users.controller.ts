@@ -126,7 +126,7 @@ async function addToChannel(req: Request, res: Response) {
   const user = await addUserToChannel(req.params.id, req.params.channelId);
 
   if (user.err) {
-    res.status(500).send(user.data);
+    res.status(500).send({message: user.data});
   } else {
     res.status(200).json(user);
   }
