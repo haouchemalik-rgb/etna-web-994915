@@ -1,6 +1,6 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { UserContext } from '../contexts/UserContext';
-import { getUser, loginUser } from '../services/User.services';
+import { getJtwData, getUser, loginUser } from '../services/User.services';
 
 
 const Login = () => {
@@ -14,7 +14,6 @@ const Login = () => {
       .then((res) => {
         if (res.status === 200) {
           setUser(res.data[0]);
-          console.log(user);
         }
       });
   }
@@ -35,6 +34,15 @@ const Login = () => {
       }
     });
   }
+
+  useEffect(() => {
+    getJtwData()
+      .then((res) => {
+        if (res.status === 200) {
+          getUserConnected();
+        }
+      })
+  }, []);
 
   return (
     <div className='flex fixed inset-0 items-center justify-center bg-gray-700 bg-opacity-50 w-full h-screen'>
@@ -61,8 +69,7 @@ const Login = () => {
           <h1 className='mt-5 text-red-400 text-sm'>{message}</h1>
         </form>
         {user?user.userName : ''}
-      </div>
-        
+      </div>  
     </div>
   )
 }
