@@ -31,6 +31,8 @@ const Login = () => {
         await getUserConnected();
         console.log(user.userName);
         setMessage(user.userName);
+      } else {
+        setMessage('Erreur server');
       }
     });
   }

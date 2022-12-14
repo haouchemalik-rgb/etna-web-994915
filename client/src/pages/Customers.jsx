@@ -21,12 +21,12 @@ const Customers = () => {
       );
   }
 
-  function dataStateChange(args: any){
+  function dataStateChange(args){
     console.log('statechanged');
     refreshGrid();
   }
 
-  function dataSourceChanged(state: any) { 
+  function dataSourceChanged(state) { 
     debugger;
     console.log(state)
     if (state.action === "add") {
