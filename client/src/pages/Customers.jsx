@@ -2,23 +2,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import {DataManager, UrlAdaptor} from '@syncfusion/ej2-data';
 import { GridComponent, ColumnsDirective, ColumnDirective, Page, Selection, Inject, Edit, Toolbar, Sort, Filter } from '@syncfusion/ej2-react-grids';
 import { Header } from '../components';
-<<<<<<< HEAD
-import { getAllUsers } from '../services/User.services';
 import { UserContext } from '../contexts/UserContext';
-=======
 import { getAllUsers, deleteUser, addUser, editUser } from '../services/User.services';
->>>>>>> d3b5e0571759cafd398499f1573b61fb7d080b69
+
 
 const Customers = () => {
   const {user} = useContext(UserContext);
   const [users, setUsers] = useState(null);
-<<<<<<< HEAD
   const toolbarAdmin = ['Delete', 'Add', 'Edit', 'Search'];
   const toolbar = ['Search'];
-  
-=======
   const [errorMessage, setErrorMessage] = useState('');
->>>>>>> d3b5e0571759cafd398499f1573b61fb7d080b69
 
   useEffect(() => {
     refreshGrid()
