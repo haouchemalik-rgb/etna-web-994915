@@ -133,7 +133,7 @@ async function addToChannel(req: Request, res: Response) {
 }
 
 async function removeFromChannel(req: Request, res: Response) {
-  await removeUserFromChannel(req)
+  await removeUserFromChannel(req.params.id, req.params.channelId)
     .then((data) => {
       if (!data.err) {
         res.status(200).json({message: data.data});
@@ -141,10 +141,9 @@ async function removeFromChannel(req: Request, res: Response) {
         res.status(400).json({message: data.data});
       }
     })
-    .catch(() => {
+    .catch((err) => {
       res.status(500).json({message: 'Request Error'})
     })
-  
 }
 
 export {
@@ -152,5 +151,5 @@ export {
   register, deleteById,
   updateById, login,
   logout, checkPass,
-  jwtData, addToChannel, removeFromChannel
+  jwtData, addToChannel, removeFromChannel,
 }

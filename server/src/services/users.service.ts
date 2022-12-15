@@ -220,16 +220,15 @@ async function addUserToChannel(userId: any, channelId: any) {
   return user;
 }
 
-async function removeUserFromChannel(req: Request) {
+async function removeUserFromChannel(userId: any, channelId: any) {
   const user = await Users.findOne({
     where: {
-      id: req.params.id
+      id: userId,
     }
   });
-  console.log('hello');
   let channels: string[] = [];
   for (const channel of user.channels) {
-    if (channel !== req.params.channelId) {
+    if (channel !== channelId) {
       channels.push(channel);
     }
   }
@@ -243,7 +242,7 @@ async function removeUserFromChannel(req: Request) {
     channels,
   },{
     where: {
-      id: req.params.id
+      id: userId
     }
   });
   return {

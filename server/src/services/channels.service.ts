@@ -1,6 +1,6 @@
-import { Request } from 'express';
-import { where } from 'sequelize';
+import { removeUserFromChannel } from '../services/users.service';
 import Channels from '../database/models/Channels';
+import { getAllUsers } from './users.service';
 
 async function getAllChannels() {
   const channels = await Channels.findAll();
@@ -16,13 +16,26 @@ async function getByIdChannels(id: any) {
   return channel;
 }
 
-async function deleteChannelById(id: string) {
+async function deleteChannelById(id: any) {
+  let users: any;
+  await getAllUsers()
+    .then((data) => users = data.data)
+    .catch(() => users = null);
+
+  for (const user of users) {
+    await removeUserFromChannel(user.id, id)
+      .catch((res) => {
+        return {
+          err: true,
+          data: res,
+        }
+      })
+  }
   await Channels.destroy({
     where: {
       id,
     },
   });
-
   return {
     err: false,
     data: 'Deleted successfully',
