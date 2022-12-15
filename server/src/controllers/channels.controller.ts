@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import Channels from '../database/models/Channels';
-import { getAllChannels, getByIdChannels, createChannels, sendMessageChannel } from '../services/channels.service';
+import { getAllChannels, getByIdChannels, createChannels, sendMessageChannel, deleteChannelById } from '../services/channels.service';
 
 async function getAll(req: Request, res: Response) {
   const channels = await getAllChannels();
@@ -42,7 +42,20 @@ async function sendMessage(req: Request, res: Response) {
   }
 }
 
+function deleteChannel(req: Request, res: Response) {
+  deleteChannelById(req.params.id)
+    .then((data) => {
+      if (!data.err) {
+        res.status(200).json({message: data.data});
+      }
+    })
+    .catch((error) => {
+      res.status(500).json({message: 'Request Error'});
+    })
+}
+
 
 export {
-  getAll, getById, create, sendMessage
+  getAll, getById, create,
+  sendMessage, deleteChannel,
 }

@@ -1,4 +1,5 @@
 import { Request } from 'express';
+import { where } from 'sequelize';
 import Channels from '../database/models/Channels';
 
 async function getAllChannels() {
@@ -13,6 +14,19 @@ async function getByIdChannels(id: any) {
     }
   });
   return channel;
+}
+
+async function deleteChannelById(id: string) {
+  await Channels.destroy({
+    where: {
+      id,
+    },
+  });
+
+  return {
+    err: false,
+    data: 'Deleted successfully',
+  }
 }
 
 async function createChannels(body: any) {
@@ -41,5 +55,7 @@ async function sendMessageChannel(id: any, body: any) {
 
 
 export {
-  getAllChannels, getByIdChannels, createChannels, sendMessageChannel
+  getAllChannels, getByIdChannels,
+  createChannels, sendMessageChannel,
+  deleteChannelById,
 }
