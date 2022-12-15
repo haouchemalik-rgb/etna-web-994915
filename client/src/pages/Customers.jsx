@@ -49,15 +49,14 @@ const Customers = () => {
       console.log(state);
       editUser(state.data).then( (res) => {
           if (res.status === 201 && res.status === 400) {
-            refreshGrid();
             setErrorMessage(res.data.message);
           } else if ( res.status === 500 ) {
-            refreshGrid();
             setErrorMessage('Something went wrong.');
           }
+
+          refreshGrid();
         }
       )
-      refreshGrid();
       
     } else if (state.requestType === "delete") {
 
