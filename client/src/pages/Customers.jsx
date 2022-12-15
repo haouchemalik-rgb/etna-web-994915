@@ -97,7 +97,7 @@ const Customers = () => {
           <ColumnDirective field='password' headerText='password' type='password' validationRules={{ required: true }}/>
           <ColumnDirective type='boolean' displayAsCheckBox='true' editType="booleanedit" field='admin' headerText='Administrateur'/>
         </ColumnsDirective>
-        <Inject services={user.admin? [Page, Selection, Toolbar, Edit, Sort, Filter] : [Page, Selection, Toolbar, Sort, Filter]} />
+        <Inject services={user? (user.admin? [Page, Selection, Toolbar, Edit, Sort, Filter] : [Page, Selection, Toolbar, Sort, Filter]) : ''} />
       </GridComponent>
       {errorMessage}
     </div>
