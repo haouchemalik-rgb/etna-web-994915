@@ -2,11 +2,12 @@ import React, { useEffect, useState } from 'react';
 import {DataManager, UrlAdaptor} from '@syncfusion/ej2-data';
 import { GridComponent, ColumnsDirective, ColumnDirective, Page, Selection, Inject, Edit, Toolbar, Sort, Filter } from '@syncfusion/ej2-react-grids';
 import { Header } from '../components';
-import { getAllUsers } from '../services/User.services';
+import { getAllUsers, deleteUser, addUser, editUser } from '../services/User.services';
 
 const Customers = () => {
 
   const [users, setUsers] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     refreshGrid()
@@ -21,20 +22,51 @@ const Customers = () => {
       );
   }
 
-  function dataStateChange(args){
-    console.log('statechanged');
-    refreshGrid();
-  }
-
-  function dataSourceChanged(state) { 
-    debugger;
-    console.log(state)
+  function actionComplete(state) { 
     if (state.action === "add") {
-      console.log('add');
+      
+      addUser(state.data).then(
+        (res) => {
+          if (res.status === 201) {
+            refreshGrid();
+            setErrorMessage(res.data.message);
+          } else if ( res.status === 400 ) {
+            setErrorMessage(res.data.message);
+          } else if ( res.status === 500 ) {
+            setErrorMessage('Something went wrong.');
+          }
+        }
+      )
+      
     } else if (state.action === "edit") {
-      console.log('edit');
+
+      delete state.data['createdAt'];
+      delete state.data['updatedAt'];
+      
+      editUser(state.data).then(
+        (res) => {
+          if (res.status === 201) {
+            refreshGrid();
+            setErrorMessage(res.data.message);
+          } else if ( res.status === 400 ) {
+            setErrorMessage(res.data.message);
+          } else if ( res.status === 500 ) {
+            setErrorMessage('Something went wrong.');
+          }
+        }
+      )
+      
     } else if (state.requestType === "delete") {
-      console.log('delete');
+
+      state.data.forEach(element => {
+        deleteUser(element.id).then(
+          (res) => {
+            refreshGrid();
+            setErrorMessage(`Successfully deleted.`);
+          }
+        )
+      });
+
     }
   }
 
@@ -49,21 +81,21 @@ const Customers = () => {
         editSettings={{allowDeleting: true, allowEditing: true, allowAdding: true}}
         allowSorting={true}
 
-        dataSourceChanged={dataSourceChanged}
-        dataStateChange={dataStateChange}
+        actionComplete={actionComplete}
       >
 
         <ColumnsDirective>
           <ColumnDirective type='checkbox' width='40px'/>
-          {/*<ColumnDirective field='id' headerText='id' textAlign='left' width='70px' isPrimaryKey={true}/>*/}
-          <ColumnDirective field='userName'  headerText='userName' />
-          <ColumnDirective field='firstName' headerText='Prénom'/>
-          <ColumnDirective field='lastName' headerText='Nom'/>
-          <ColumnDirective field='email' headerText='email'/>
+          <ColumnDirective field='userName'  headerText='userName' validationRules={{ required: true }}/>
+          <ColumnDirective field='firstName' headerText='Prénom' validationRules={{ required: true }}/>
+          <ColumnDirective field='lastName' headerText='Nom' validationRules={{ required: true }}/>
+          <ColumnDirective field='email' headerText='email' validationRules={{ required: true }}/>
+          <ColumnDirective field='password' headerText='password' type='password' validationRules={{ required: true }}/>
           <ColumnDirective type='boolean' displayAsCheckBox='true' editType="booleanedit" field='admin' headerText='Administrateur'/>
         </ColumnsDirective>
         <Inject services={[Page, Selection, Toolbar, Edit, Sort, Filter]} />
       </GridComponent>
+      {errorMessage}
     </div>
   );
 };

@@ -48,7 +48,11 @@ async function updateUser(req: Request) {
         userName: req.body.userName,
       },
     });
-    userName? userNameExist = true : userNameExist = false;
+    if (userName.id !== req.body.id) {
+      userName? userNameExist = true : userNameExist = false;
+    } else {
+      userNameExist = false;
+    }
   }
   
   if (req.body.email) {
@@ -57,13 +61,28 @@ async function updateUser(req: Request) {
         email: req.body.email,
       },
     });
-    email? emailExist = true : emailExist = false;
+    if (email.id !== req.body.id) {
+      email? emailExist = true : emailExist = false;
+    } else {
+      emailExist = false;
+    }
   }
   if (req.body.password) {
-    req.body.password = await bcrypt.hash(req.body.password, 13);
+    const user = await Users.findAll({
+      where: {
+        id: req.body.id,
+      },
+    });
+
+    if (req.body.password !== user.password) {
+      req.body.password = await bcrypt.hash(req.body.password, 13);
+    }
   }
   if (!emailExist && !userNameExist) {
-    await Users.update(req.body, {
+    console.log('okokok')
+    await Users.update({
+      email: req.body.email
+    }, {
       where: {
         id: req.params.id,
       },
