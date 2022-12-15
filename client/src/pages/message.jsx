@@ -7,11 +7,12 @@ import { getUserChannels } from '../services/ChannelService';
 
 const Message = () => {
   const {user} = useContext(UserContext);
-  const [channels, setChannels] = useState([]);
+  const [channels, setChannels] = useState(null);
 
   useEffect(() => {
     getUserChannels(user? user.channels: [])
       .then((data) => {
+        console.log(data);
         setChannels(data);
       });
   }, []);
@@ -29,24 +30,22 @@ const Message = () => {
                 Conversations
               </header>
             </div>
-
-            
             <div className='overflow-y-auto overflow-x-hidden'>
-              {channels && channels.map((channel, index) => {
-                console.log(channel.name);
 
+              {console.log(channels)}
+              {channels && channels.map((channel, index) => {
+                console.log('in mapping');
                 return(
                   <button key={index} className='hover:bg-gray-400 w-full max-w-full p-1'>
                     <div className='flex flex-row'>
                       <img className='w-[50px]' src={groupImage} alt='avatar'/>
-                      <p className='truncate mt-3 ml-2'>{channel['name']}</p>
+                      <p className='truncate mt-3 ml-2'>{channel.name}</p>
                     </div>
                   </button>
                 )
               })}
-              
 
-              {/* <button className='hover:bg-gray-400 max-w-full p-1'>
+              <button className='hover:bg-gray-400 max-w-full p-1'>
                 <div className='flex flex-row overflow-y-auto overflow-x-hidden'>
                   <img className='w-[50px]' src={groupImage} alt='avatar'/>
                   <p className='truncate mt-3 ml-2'>groupe Name;nlendsfoldsnflknnnnnnnnnnnnnnnn</p>
@@ -58,7 +57,7 @@ const Message = () => {
                   <img className='w-[50px]' src={userImage} alt='avatar'/>
                   <p className='truncate mt-3 ml-2'>groupe Name;nlendsfoldsnflknnnnnnnnnnnnnnnn</p>
                 </div>
-              </button> */}
+              </button>
 
             </div>
           </div>

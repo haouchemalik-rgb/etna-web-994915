@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {DataManager, UrlAdaptor} from '@syncfusion/ej2-data';
 import { GridComponent, ColumnsDirective, ColumnDirective, Page, Selection, Inject, Edit, Toolbar, Sort, Filter } from '@syncfusion/ej2-react-grids';
 import { Header } from '../components';
 import { getAllUsers } from '../services/User.services';
+import { UserContext } from '../contexts/UserContext';
 
 const Customers = () => {
-
+  const {user} = useContext(UserContext);
   const [users, setUsers] = useState(null);
+  const toolbarAdmin = ['Delete', 'Add', 'Edit', 'Search'];
+  const toolbar = ['Search'];
+  
 
   useEffect(() => {
     refreshGrid()
@@ -45,7 +49,7 @@ const Customers = () => {
         dataSource={users}
         enableHover={true} allowPaging={true}
         pageSettings={{ pageCount: 5}}
-        persistSelection={true} toolbar={['Delete', 'Add', 'Edit', 'Search']}
+        persistSelection={true} toolbar={user.admin? toolbarAdmin : toolbar}
         editSettings={{allowDeleting: true, allowEditing: true, allowAdding: true}}
         allowSorting={true}
 
@@ -62,7 +66,7 @@ const Customers = () => {
           <ColumnDirective field='email' headerText='email'/>
           <ColumnDirective type='boolean' displayAsCheckBox='true' editType="booleanedit" field='admin' headerText='Administrateur'/>
         </ColumnsDirective>
-        <Inject services={[Page, Selection, Toolbar, Edit, Sort, Filter]} />
+        <Inject services={user.admin? [Page, Selection, Toolbar, Edit, Sort, Filter] : [Page, Selection, Toolbar, Sort, Filter]} />
       </GridComponent>
     </div>
   );
