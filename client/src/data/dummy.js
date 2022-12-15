@@ -82,6 +82,7 @@ export const scheduleData = [
     EndTime: '2022-12-11T08:30:00.000Z',
     CategoryColor: '#357cd2',
   },
+  
 ];
 
 export const kanbanData = [
