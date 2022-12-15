@@ -18,3 +18,9 @@ export const getUserChannels = async (channelsId) => {
 
   return channels;
 }
+
+export const addMessage = async (message, chanId) => {
+  return await api.post(`/channel/${chanId}/send_message`, message)
+    .then((res) => res)
+    .catch((err) => err.response);
+}

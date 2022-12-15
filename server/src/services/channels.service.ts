@@ -33,7 +33,10 @@ async function sendMessageChannel(id: any, body: any) {
     "messages": channel.messages
   }, { where: { id } });
 
-  return channel;
+  return {
+    err: false,
+    data: 'Message sent',
+  };
 }
 
 

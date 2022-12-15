@@ -73,8 +73,9 @@ const App = () => {
                 </Routes>
               </div>
             </div>
+            {/* <button onClick={notifyMe()}>Notify me!</button> */}
           </div>
-          <button onClick={notifyMe()}>Notify me!</button>
+          
           <div hidden={user? true : false}>
             <Login/>
           </div>
