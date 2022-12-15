@@ -48,7 +48,8 @@ export const addUser = async (user) => {
 }
 
 export const editUser = async (user) => {
-  return await api.patch(`/user/${user.id}`, user)
+  const userId = user.id;
+  return await api.patch(`/user/${userId}`, user)
     .then((res) => res)
     .catch((err) => err.response);
 }

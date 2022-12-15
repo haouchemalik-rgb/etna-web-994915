@@ -39,8 +39,8 @@ async function deleteUser(req: Request) {
 }
 
 async function updateUser(req: Request) {
-  let userNameExist: Boolean = false;
-  let emailExist: Boolean = false;
+  let userNameExist: boolean = false;
+  let emailExist: boolean = false;
 
   if (req.body.userName) {
     const userName = await Users.findOne({
@@ -48,10 +48,8 @@ async function updateUser(req: Request) {
         userName: req.body.userName,
       },
     });
-    if (userName.id !== req.body.id) {
-      userName? userNameExist = true : userNameExist = false;
-    } else {
-      userNameExist = false;
+    if (userName && userName.id !== req.body.id) {
+      userNameExist = true;
     }
   }
   
@@ -61,28 +59,26 @@ async function updateUser(req: Request) {
         email: req.body.email,
       },
     });
-    if (email.id !== req.body.id) {
-      email? emailExist = true : emailExist = false;
-    } else {
-      emailExist = false;
+    if (email && email.id !== req.body.id) {
+      emailExist = true;
     }
   }
   if (req.body.password) {
-    const user = await Users.findAll({
+    const user = await Users.findOne({
       where: {
-        id: req.body.id,
+        id: req.params.id,
       },
     });
-
+    
     if (req.body.password !== user.password) {
       req.body.password = await bcrypt.hash(req.body.password, 13);
+    } else {
+      delete req.body['password'];
     }
   }
   if (!emailExist && !userNameExist) {
     console.log('okokok')
-    await Users.update({
-      email: req.body.email
-    }, {
+    await Users.update(req.body, {
       where: {
         id: req.params.id,
       },
@@ -96,11 +92,10 @@ async function updateUser(req: Request) {
       data: 'This email is already linked to an account',
       err: true,
     }
-  } else {
-    return {
-      data: 'This userName is already used',
-      err: true,
-    }
+  }
+  return {
+    data: 'This userName is already used',
+    err: true,
   }
 }
 

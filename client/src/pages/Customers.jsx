@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {DataManager, UrlAdaptor} from '@syncfusion/ej2-data';
 import { GridComponent, ColumnsDirective, ColumnDirective, Page, Selection, Inject, Edit, Toolbar, Sort, Filter } from '@syncfusion/ej2-react-grids';
 import { Header } from '../components';
 import { UserContext } from '../contexts/UserContext';
@@ -46,19 +45,19 @@ const Customers = () => {
 
       delete state.data['createdAt'];
       delete state.data['updatedAt'];
-      
-      editUser(state.data).then(
-        (res) => {
-          if (res.status === 201) {
+      delete state.data['channels'];
+      console.log(state);
+      editUser(state.data).then( (res) => {
+          if (res.status === 201 && res.status === 400) {
             refreshGrid();
             setErrorMessage(res.data.message);
-          } else if ( res.status === 400 ) {
-            setErrorMessage(res.data.message);
           } else if ( res.status === 500 ) {
+            refreshGrid();
             setErrorMessage('Something went wrong.');
           }
         }
       )
+      refreshGrid();
       
     } else if (state.requestType === "delete") {
 
@@ -81,7 +80,7 @@ const Customers = () => {
         dataSource={users}
         enableHover={true} allowPaging={true}
         pageSettings={{ pageCount: 5}}
-        persistSelection={true} toolbar={user? user.admin? toolbarAdmin : toolbar : ''}
+        persistSelection={true} toolbar={user && user.admin? toolbarAdmin : toolbar}
         editSettings={{allowDeleting: true, allowEditing: true, allowAdding: true}}
         allowSorting={true}
 

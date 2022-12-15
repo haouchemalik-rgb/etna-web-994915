@@ -38,7 +38,7 @@ async function updateById(req: Request, res: Response) {
       }
     })
     .catch(() => {
-      res.status(500).json({messsage: 'Resource not updated'});
+      res.status(500).json({message: 'Resource not updated'});
     })
 }
 
