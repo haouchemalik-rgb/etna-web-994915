@@ -1,3 +1,4 @@
+import { Channel } from 'diagnostics_channel';
 import { Request } from 'express';
 import Channels from '../database/models/Channels';
 import Users from '../database/models/Users';
@@ -209,8 +210,8 @@ async function addUserToChannel(userId: any, channelId: any) {
       user.channels.push(channelId);
 
       await Users.update({
-        "channels": user.channels
-      }, { where: { "id": userId } });
+        channels: user.channels
+      }, { where: { id: userId } });
     } else {
       return {err : true, data: 'channel doesn\'t exist'}
     }
@@ -219,24 +220,36 @@ async function addUserToChannel(userId: any, channelId: any) {
   return user;
 }
 
-async function removeUserFromChannel(userId: any, channelId: any) {
+async function removeUserFromChannel(req: Request) {
   const user = await Users.findOne({
     where: {
-      id: userId
+      id: req.params.id
     }
   });
-
-  for (let i = 0; i < user.channels.length; i++) {
-    if (user.channels[i] === channelId) {
-      user.channels.splice(i, 1);
+  console.log('hello');
+  let channels: string[] = [];
+  for (const channel of user.channels) {
+    if (channel !== req.params.channelId) {
+      channels.push(channel);
     }
   }
-
-  await Users.update({
-    "channels": user.channels
-  }, { where: { "id": userId } });
-
-  return user;
+  if (channels === user.channels) {
+    return {
+      err: true,
+      data: 'Channel not removed',
+    };
+  }
+  Users.update({
+    channels,
+  },{
+    where: {
+      id: req.params.id
+    }
+  });
+  return {
+    err: false,
+    data: 'Channel removed',
+  };
 }
 
 export {

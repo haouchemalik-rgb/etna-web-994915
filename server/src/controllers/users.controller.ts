@@ -133,8 +133,18 @@ async function addToChannel(req: Request, res: Response) {
 }
 
 async function removeFromChannel(req: Request, res: Response) {
-  const user = await removeUserFromChannel(req.params.id, req.params.channelId);
-  res.status(200).json(user);
+  await removeUserFromChannel(req)
+    .then((data) => {
+      if (!data.err) {
+        res.status(200).json({message: data.data});
+      } else {
+        res.status(400).json({message: data.data});
+      }
+    })
+    .catch(() => {
+      res.status(500).json({message: 'Request Error'})
+    })
+  
 }
 
 export {
