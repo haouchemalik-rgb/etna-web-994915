@@ -8,14 +8,13 @@ export const getChannel = async (channelId) => {
 
 export const getUserChannels = async (channelsId) => {
   const channels = [];
-  channelsId.forEach(chanId => {
-    getChannel(chanId)
-      .then((res) => {
-        if (res.status === 200) {
-          channels.push(res.data);
-        }
-      })
-  });
+
+  for (const chanId of channelsId) {
+    const res = await getChannel(chanId);
+    if (res.status === 200) {
+      channels.push(res.data);
+    }
+  }
 
   return channels;
 }

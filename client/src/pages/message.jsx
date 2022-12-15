@@ -7,14 +7,14 @@ import { getUserChannels } from '../services/ChannelService';
 
 const Message = () => {
   const {user} = useContext(UserContext);
-  const [channels, setChannels] = useState(null);
+  const [channels, setChannels] = useState([]);
 
   useEffect(() => {
-    getUserChannels(user? user.channels: [])
-      .then((data) => {
-        console.log(data);
-        setChannels(data);
-      });
+    getUserChannels(user ? user.channels : [])
+    .then((data) => {
+      setChannels(data);
+      console.log(data.length);
+    });
   }, []);
 
   return (
@@ -31,9 +31,7 @@ const Message = () => {
               </header>
             </div>
             <div className='overflow-y-auto overflow-x-hidden'>
-
-              {console.log(channels)}
-              {channels && channels.map((channel, index) => {
+              {channels.length > 0 && channels.map((channel, index) => {
                 console.log('in mapping');
                 return(
                   <button key={index} className='hover:bg-gray-400 w-full max-w-full p-1'>
@@ -44,20 +42,6 @@ const Message = () => {
                   </button>
                 )
               })}
-
-              <button className='hover:bg-gray-400 max-w-full p-1'>
-                <div className='flex flex-row overflow-y-auto overflow-x-hidden'>
-                  <img className='w-[50px]' src={groupImage} alt='avatar'/>
-                  <p className='truncate mt-3 ml-2'>groupe Name;nlendsfoldsnflknnnnnnnnnnnnnnnn</p>
-                </div>
-              </button>
-
-              <button className='hover:bg-gray-400 max-w-full p-1'>
-                <div className='flex flex-row overflow-y-auto overflow-x-hidden'>
-                  <img className='w-[50px]' src={userImage} alt='avatar'/>
-                  <p className='truncate mt-3 ml-2'>groupe Name;nlendsfoldsnflknnnnnnnnnnnnnnnn</p>
-                </div>
-              </button>
 
             </div>
           </div>
