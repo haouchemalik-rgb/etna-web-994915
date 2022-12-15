@@ -81,7 +81,7 @@ const Customers = () => {
         dataSource={users}
         enableHover={true} allowPaging={true}
         pageSettings={{ pageCount: 5}}
-        persistSelection={true} toolbar={user.admin? toolbarAdmin : toolbar}
+        persistSelection={true} toolbar={user? user.admin? toolbarAdmin : toolbar : ''}
         editSettings={{allowDeleting: true, allowEditing: true, allowAdding: true}}
         allowSorting={true}
 
