@@ -28,7 +28,7 @@ export const kanbanGrid = [
 
 export const links = [
   {
-    title: 'Pages',
+    title: 'Admin',
     links: [
       {
         name: 'customers',
@@ -59,28 +59,10 @@ export const chatData = [
   {
     image:
       avatar2,
-    message: 'Roman Joined the Team!',
-    desc: 'Congratulate him',
+    message: 'How are you',
+    desc: 'Answer him',
     time: '9:08 AM',
   },
-];
-
-export const scheduleData = [
-  {
-    Id: 1,
-    Subject: 'Explosion of Betelgeuse Star',
-    Location: 'Space Center USA',
-    StartTime: '2022-12-10T04:00:00.000Z',
-    EndTime: '2022-12-10T05:30:00.000Z',
-  },
-  {
-    id: 2,
-    subject: 'Thule Air Crash Report',
-    location: 'Newyork City',
-    startTime: '2022-12-11T06:30:00.000Z',
-    endTime: '2022-12-11T08:30:00.000Z',
-  },
-  
 ];
 
 export const kanbanData = [

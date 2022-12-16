@@ -2,14 +2,10 @@ import React, { useMemo, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-
 import { Navbar, Sidebar, ThemeSettings, Login } from './components';
-import { Calendar, Customers, Kanban } from './pages';
+import { Calendar, Customers, Kanban , Principal, Message} from './pages';
 import './App.css';
-import Message from './pages/message';
-
 import { useStateContext } from './contexts/ContextProvider';
-import notifyMe from './Notification/Notification';
 import { UserContext } from './contexts/UserContext';
 
 const App = () => {
@@ -63,6 +59,7 @@ const App = () => {
                 {themeSettings && (<ThemeSettings />)}
 
                 <Routes>
+                  <Route path="/" element={<Principal />} />
                   {/* pages  */}
                   <Route path="/customers" element={<Customers />} />
 
