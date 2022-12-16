@@ -6,7 +6,7 @@ import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
 // Importing jsx pages and components
 import { Navbar, Sidebar, ThemeSettings, Login } from './components';
-import { Calendar, Users, Messagerie, Kanban } from './pages';
+import { Calendar, Users, Messagerie, Kanban, Principal } from './pages';
 import './App.css';
 
 // Importing context used in the app
