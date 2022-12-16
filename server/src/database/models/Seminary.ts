@@ -10,7 +10,7 @@ const Seminary = sequelize.define('Seminary',
       primaryKey: true,
       unique: true,
     },
-    subject: {
+    Subject: {
       type: DataTypes.STRING,
       allowNull: false,
       defaultValue: 'now',
@@ -27,17 +27,17 @@ const Seminary = sequelize.define('Seminary',
       allowNull: false,
       defaultValue: 'now',
     },
-    startTime: {
+    StartTime: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: literal('CURRENT_TIMESTAMP'),
     },
-    endTime: {
+    EndTime: {
       type: DataTypes.DATE,
       allowNull: false,
       defaultValue: literal('CURRENT_TIMESTAMP'),
     },
-    isAllDay: {
+    IsAllDay: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: false,
