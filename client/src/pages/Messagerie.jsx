@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Header } from '../components';
 import { UserContext } from '../contexts/UserContext';
 import groupImage from '../images/group.png';
@@ -7,6 +7,7 @@ import { addMessage, getUserChannels } from '../services/ChannelService';
 
 const Message = () => {
   const {user} = useContext(UserContext);
+  const bottomRef = useRef(null);
   const [channels, setChannels] = useState([]);
   const [channelOpened, setChannelOpended] = useState([]);
   const [channelIndex, setChannelIndex] = useState(0);
@@ -15,6 +16,10 @@ const Message = () => {
   useEffect(() => {
     refreshUserChannels();
   }, [user]);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({behavior: 'smooth'});
+  }, [channelOpened])
 
   const newMessage = () => {
     addMessage({
@@ -122,6 +127,7 @@ const Message = () => {
                 )
               }
             })}
+            <div ref={bottomRef} />
           </div>
         </div>
       </div>
