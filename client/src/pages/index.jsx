@@ -1,5 +1,4 @@
 export { default as Kanban } from './Kanban';
-export { default as Customers } from './Customers';
+export { default as Users } from './Users';
 export { default as Calendar } from './Calendar';
-export { default as Message } from './message';
-
+export { default as Messagerie } from './Messagerie';

@@ -1,21 +1,30 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { GridComponent, ColumnsDirective, ColumnDirective, Page, Selection, Inject, Edit, Toolbar, Sort, Filter } from '@syncfusion/ej2-react-grids';
 import { Header } from '../components';
-import { UserContext } from '../contexts/UserContext';
-import { getAllUsers, deleteUser, addUser, editUser } from '../services/User.services';
+import { UserContext } from '../contexts/UserContext';// Importing User Context
+import { getAllUsers, deleteUser, addUser, editUser } from '../services/User.services'; // importing db/api services
 
-
-const Customers = () => {
+// Users Page
+const Users = () => {
+  // saving user connected with User context
   const {user} = useContext(UserContext);
-  const [users, setUsers] = useState(null);
+
+  // some option of the Grid
   const toolbarAdmin = ['Delete', 'Add', 'Edit', 'Search'];
   const toolbar = ['Search'];
+  
+  // state to save all users in the tables
+  const [users, setUsers] = useState(null);
+
+  // Error messages showed when error occurs
   const [errorMessage, setErrorMessage] = useState('');
 
+  // geting all Users in the construction of the page
   useEffect(() => {
     refreshGrid()
   }, [])
 
+  // fonction to get all users
   function refreshGrid() {
     getAllUsers()
       .then(
@@ -25,9 +34,9 @@ const Customers = () => {
       );
   }
 
+  // function to manage all changes/addes/deletes in the grid
   function actionComplete(state) { 
     if (state.action === "add") {
-      
       addUser(state.data).then(
         (res) => {
           if (res.status === 201) {
@@ -40,9 +49,7 @@ const Customers = () => {
           }
         }
       )
-      
     } else if (state.action === "edit") {
-
       delete state.data['createdAt'];
       delete state.data['updatedAt'];
       delete state.data['channels'];
@@ -52,13 +59,11 @@ const Customers = () => {
           } else if ( res.status === 500 ) {
             setErrorMessage('Something went wrong.');
           }
-
           refreshGrid();
         }
       )
       
     } else if (state.requestType === "delete") {
-
       state.data.forEach(element => {
         deleteUser(element.id).then(
           (res) => {
@@ -67,13 +72,13 @@ const Customers = () => {
           }
         )
       });
-
     }
   }
 
+  //HTML code
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-      <Header title="Customers" />
+      <Header title="Users" />
       <GridComponent
         dataSource={users}
         enableHover={true} allowPaging={true}
@@ -81,10 +86,8 @@ const Customers = () => {
         persistSelection={true} toolbar={user && user.admin? toolbarAdmin : toolbar}
         editSettings={{allowDeleting: true, allowEditing: true, allowAdding: true}}
         allowSorting={true}
-
         actionComplete={actionComplete}
       >
-
         <ColumnsDirective>
           <ColumnDirective type='checkbox' width='40px'/>
           <ColumnDirective field='userName'  headerText='userName' validationRules={{ required: true }}/>
@@ -101,4 +104,4 @@ const Customers = () => {
   );
 };
 
-export default Customers;
+export default Users;
