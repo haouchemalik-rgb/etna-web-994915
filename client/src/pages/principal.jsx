@@ -1,6 +1,6 @@
 import React from 'react';
 
-import logo from '../logo/logo_2.png'
+import logo from '../logo/logo_2.png';
 
 const Principal = () => {
     return (

@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { MdOutlineCancel } from 'react-icons/md';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
-
+import logo from '../logo/logo_2.png';
 import { links } from '../data/dummy';
 import { useStateContext } from '../contexts/ContextProvider';
 
@@ -24,7 +24,13 @@ const Sidebar = () => {
         <>
           <div className="flex justify-between items-center">
             <Link to="/" onClick={handleCloseSideBar} className="items-center gap-3 ml-3 mt-4 flex text-xl font-extrabold tracking-tight dark:text-white text-slate-900">
-              <span>Calendar</span>
+            <div className='flex w-full'>
+              <img
+                className="w-[180px]"
+                src={logo}
+                alt={logo}
+              />
+            </div>
             </Link>
             <TooltipComponent content="Menu" position="BottomCenter">
               <button
