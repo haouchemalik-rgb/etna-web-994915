@@ -11,14 +11,19 @@ const Scheduler = () => {
     arg.navigation.enable = true;
   };
   const [ semina, setsemina ] = useState();
+  
   useEffect(() => {
     getAllseminary()
     .then((res) => {
       if (res.status === 200) {
         setsemina(res.data);
+        console.log(res.data)
       }
     })
   }, [])
+  if (semina ==null){
+    return <h1>Loading...</h1>
+  }
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
       <Header title="Calendar" />
@@ -27,7 +32,6 @@ const Scheduler = () => {
         ref={(schedule) => setScheduleObj(schedule)}
         eventSettings={{ dataSource: semina }}
         dragStart={onDragStart}
-
       >
         <ViewsDirective>
           { ['Day', 'Week', 'WorkWeek', 'Month', 'Agenda'].map((item) => <ViewDirective key={item} option={item} />)}
