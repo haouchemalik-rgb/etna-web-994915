@@ -66,7 +66,7 @@ export const rangeColorMapping = [
 
 export const links = [
   {
-    title: 'Pages',
+    title: 'Admin',
     links: [
       {
         name: 'users',
@@ -97,8 +97,8 @@ export const chatData = [
   {
     image:
       avatar2,
-    message: 'Roman Joined the Team!',
-    desc: 'Congratulate him',
+    message: 'How are you',
+    desc: 'Answer him',
     time: '9:08 AM',
   },
 ];

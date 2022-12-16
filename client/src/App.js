@@ -67,6 +67,7 @@ const App = () => {
                 {themeSettings && (<ThemeSettings />)}
 
                 <Routes>
+                  <Route path="/" element={<Principal />} />
                   {/* pages  */}
                   <Route path="/users" element={<Users/>} />
 
