@@ -1,20 +1,24 @@
+// Importing all dependencies nedded
 import React, { useMemo, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
 
+// Importing jsx pages and components
 import { Navbar, Sidebar, ThemeSettings, Login } from './components';
-import { Calendar, Customers, Kanban } from './pages';
+import { Calendar, Users, Messagerie, Kanban } from './pages';
 import './App.css';
-import Message from './pages/message';
 
+// Importing context used in the app
 import { useStateContext } from './contexts/ContextProvider';
-import notifyMe from './Notification/Notification';
 import { UserContext } from './contexts/UserContext';
+// import notifyMe from './Notification/Notification';
 
+// react app
 const App = () => {
   const { currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
 
+  // setting the variables used with the UserContext Provider
   const [user, setUser] = useState(null);
   const userProvider = useMemo(() => ({user, setUser}), [user, setUser]);
 
@@ -64,17 +68,18 @@ const App = () => {
 
                 <Routes>
                   {/* pages  */}
-                  <Route path="/customers" element={<Customers />} />
+                  <Route path="/users" element={<Users/>} />
 
                   {/* apps  */}
-                  <Route path="/message" element={<Message />} />
-                  <Route path="/kanban" element={<Kanban />} />
-                  <Route path="/calendar" element={<Calendar />} />
+                  <Route path="/messagerie" element={<Messagerie/>} />
+                  <Route path="/kanban" element={<Kanban/>} />
+                  <Route path="/calendar" element={<Calendar/>} />
                 </Routes>
               </div>
             </div>
+            {/* <button onClick={notifyMe()}>Notify me!</button> */}
           </div>
-          <button onClick={notifyMe()}>Notify me!</button>
+          
           <div hidden={user? true : false}>
             <Login/>
           </div>

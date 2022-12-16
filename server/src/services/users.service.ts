@@ -1,3 +1,4 @@
+import { Channel } from 'diagnostics_channel';
 import { Request } from 'express';
 import Channels from '../database/models/Channels';
 import Users from '../database/models/Users';
@@ -39,8 +40,8 @@ async function deleteUser(req: Request) {
 }
 
 async function updateUser(req: Request) {
-  let userNameExist: Boolean = false;
-  let emailExist: Boolean = false;
+  let userNameExist: boolean = false;
+  let emailExist: boolean = false;
 
   if (req.body.userName) {
     const userName = await Users.findOne({
@@ -48,7 +49,9 @@ async function updateUser(req: Request) {
         userName: req.body.userName,
       },
     });
-    userName? userNameExist = true : userNameExist = false;
+    if (userName && userName.id !== req.body.id) {
+      userNameExist = true;
+    }
   }
   
   if (req.body.email) {
@@ -57,10 +60,22 @@ async function updateUser(req: Request) {
         email: req.body.email,
       },
     });
-    email? emailExist = true : emailExist = false;
+    if (email && email.id !== req.body.id) {
+      emailExist = true;
+    }
   }
   if (req.body.password) {
-    req.body.password = await bcrypt.hash(req.body.password, 13);
+    const user = await Users.findOne({
+      where: {
+        id: req.params.id,
+      },
+    });
+    
+    if (req.body.password !== user.password) {
+      req.body.password = await bcrypt.hash(req.body.password, 13);
+    } else {
+      delete req.body['password'];
+    }
   }
   if (!emailExist && !userNameExist) {
     await Users.update(req.body, {
@@ -77,11 +92,10 @@ async function updateUser(req: Request) {
       data: 'This email is already linked to an account',
       err: true,
     }
-  } else {
-    return {
-      data: 'This userName is already used',
-      err: true,
-    }
+  }
+  return {
+    data: 'This userName is already used',
+    err: true,
   }
 }
 
@@ -182,24 +196,26 @@ async function addUserToChannel(userId: any, channelId: any) {
     }
   });
 
-  if (channelId in user.channels) {
-    return {err : true, data: 'already add to this channel'}
-  } else {
-    const channel = await Channels.findOne({
-      where: {
-        id: channelId
-      }
-    })
-
-    if (channel) {
-      user.channels.push(channelId);
-
-      await Users.update({
-        "channels": user.channels
-      }, { where: { "id": userId } });
-    } else {
-      return {err : true, data: 'channel doesn\'t exist'}
+  for (const element of user.channels) {
+    if (channelId === element) {
+      return {err : true, data: 'already add to this channel'}
     }
+  }
+  
+  const channel = await Channels.findOne({
+    where: {
+      id: channelId
+    }
+  })
+
+  if (channel) {
+    user.channels.push(channelId);
+
+    await Users.update({
+      "channels": user.channels
+    }, { where: { "id": userId } });
+  } else {
+    return {err : true, data: 'channel doesn\'t exist'}
   }
 
   return user;
@@ -208,21 +224,32 @@ async function addUserToChannel(userId: any, channelId: any) {
 async function removeUserFromChannel(userId: any, channelId: any) {
   const user = await Users.findOne({
     where: {
+      id: userId,
+    }
+  });
+  let channels: string[] = [];
+  for (const channel of user.channels) {
+    if (channel !== channelId) {
+      channels.push(channel);
+    }
+  }
+  if (channels === user.channels) {
+    return {
+      err: true,
+      data: 'Channel not removed',
+    };
+  }
+  Users.update({
+    channels,
+  },{
+    where: {
       id: userId
     }
   });
-
-  for (let i = 0; i < user.channels.length; i++) {
-    if (user.channels[i] === channelId) {
-      user.channels.splice(i, 1);
-    }
-  }
-
-  await Users.update({
-    "channels": user.channels
-  }, { where: { "id": userId } });
-
-  return user;
+  return {
+    err: false,
+    data: 'Channel removed',
+  };
 }
 
 export {

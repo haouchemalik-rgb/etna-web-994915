@@ -38,7 +38,7 @@ async function updateById(req: Request, res: Response) {
       }
     })
     .catch(() => {
-      res.status(500).json({messsage: 'Resource not updated'});
+      res.status(500).json({message: 'Resource not updated'});
     })
 }
 
@@ -126,15 +126,24 @@ async function addToChannel(req: Request, res: Response) {
   const user = await addUserToChannel(req.params.id, req.params.channelId);
 
   if (user.err) {
-    res.status(500).send(user.data);
+    res.status(500).send({message: user.data});
   } else {
     res.status(200).json(user);
   }
 }
 
 async function removeFromChannel(req: Request, res: Response) {
-  const user = await removeUserFromChannel(req.params.id, req.params.channelId);
-  res.status(200).json(user);
+  await removeUserFromChannel(req.params.id, req.params.channelId)
+    .then((data) => {
+      if (!data.err) {
+        res.status(200).json({message: data.data});
+      } else {
+        res.status(400).json({message: data.data});
+      }
+    })
+    .catch((err) => {
+      res.status(500).json({message: 'Request Error'})
+    })
 }
 
 export {
@@ -142,5 +151,5 @@ export {
   register, deleteById,
   updateById, login,
   logout, checkPass,
-  jwtData, addToChannel, removeFromChannel
+  jwtData, addToChannel, removeFromChannel,
 }

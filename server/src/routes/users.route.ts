@@ -22,8 +22,8 @@ UserRouter.patch('/:id', authJWT, updateById);
 UserRouter.delete('/:id', authJWT, deleteById);
 UserRouter.post('/register', register);
 UserRouter.post('/login', login);
-UserRouter.post('/:id/addchannel/:channelId', addToChannel)
-UserRouter.post('/:id/removechannel/:channelId', removeFromChannel)
+UserRouter.post('/:id/addchannel/:channelId', authJWT, addToChannel)
+UserRouter.post('/:id/removechannel/:channelId', authJWT, removeFromChannel)
 
 export default UserRouter;
 

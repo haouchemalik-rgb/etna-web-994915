@@ -29,8 +29,9 @@ const Login = () => {
         setMessage(res.data.message);
       } else if (res.status === 200) {
         await getUserConnected();
-        console.log(user.userName);
-        setMessage(user.userName);
+        setMessage('Logged In');
+      } else {
+        setMessage('Erreur server');
       }
     });
   }
