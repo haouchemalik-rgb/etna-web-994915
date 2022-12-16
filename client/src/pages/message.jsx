@@ -53,6 +53,7 @@ const Message = () => {
                   <button key={index} className='hover:bg-gray-400 w-full max-w-full p-1'
                     onClick={() => {
                       setChannelOpended(channels[index]);
+                      console.log(channelOpened);
                     }}
                   >
                     <div className='flex flex-row'>
@@ -90,7 +91,7 @@ const Message = () => {
           </form>
           <div className='p-[2px] max-h-[390px] overflow-y-auto'>
 
-            {channelOpened &&  channelOpened.messages > 0 && channelOpened.messages.map((message, index) => {
+            {channelOpened && channelOpened['id'] && channelOpened.messages.length > 0 && channelOpened.messages.map((message, index) => {
               if ( message.authorId === user.id) {
                 return (
                   <div key={index} className='flex flex-row-reverse mr-1'>
@@ -107,7 +108,7 @@ const Message = () => {
                 )
               } else {
                 return (
-                  <div>
+                  <div key={index}>
                     <p className='flex flex-row text-blue-600 font-bold'>
                       <img className='w-[20px] h-[20px] mr-2' src={userImage} alt="avatar" />
                       {message.authorName}
