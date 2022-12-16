@@ -9,14 +9,11 @@ const Message = () => {
   const {user} = useContext(UserContext);
   const [channels, setChannels] = useState([]);
   const [channelOpened, setChannelOpended] = useState([]);
+  const [channelIndex, setChannelIndex] = useState(0);
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    getUserChannels(user ? user.channels : [])
-    .then((data) => {
-      setChannels(data);
-      setChannelOpended(data[0]);
-    });
+    refreshUserChannels();
   }, [user]);
 
   const newMessage = () => {
@@ -26,6 +23,17 @@ const Message = () => {
       authorName: user.userName,
       type: 'text',
     }, channelOpened.id)
+    .then((res) => {
+      refreshUserChannels();
+    })
+  }
+
+  const refreshUserChannels = () => {
+    getUserChannels(user ? user.channels : [])
+    .then((data) => {
+      setChannels(data);
+      setChannelOpended(channelOpened['id'] ? data[channelIndex] : data[0]);
+    });
   }
 
   return (
@@ -47,6 +55,7 @@ const Message = () => {
                   <button key={index} className='hover:bg-gray-400 w-full max-w-full p-1'
                     onClick={() => {
                       setChannelOpended(channels[index]);
+                      setChannelIndex(index);
                     }}
                   >
                     <div className='flex flex-row'>
