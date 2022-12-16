@@ -46,7 +46,6 @@ const Customers = () => {
       delete state.data['createdAt'];
       delete state.data['updatedAt'];
       delete state.data['channels'];
-      console.log(state);
       editUser(state.data).then( (res) => {
           if (res.status === 201 && res.status === 400) {
             setErrorMessage(res.data.message);

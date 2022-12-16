@@ -26,12 +26,6 @@ const Message = () => {
       authorName: user.userName,
       type: 'text',
     }, channelOpened.id)
-      .then((res) => {
-        if (res.status === 200) {
-          console.log('message sent');
-          console.log(res.data);
-        }
-      })
   }
 
   return (
@@ -53,7 +47,6 @@ const Message = () => {
                   <button key={index} className='hover:bg-gray-400 w-full max-w-full p-1'
                     onClick={() => {
                       setChannelOpended(channels[index]);
-                      console.log(channelOpened);
                     }}
                   >
                     <div className='flex flex-row'>

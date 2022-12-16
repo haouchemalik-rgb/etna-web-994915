@@ -78,7 +78,6 @@ async function updateUser(req: Request) {
     }
   }
   if (!emailExist && !userNameExist) {
-    console.log('okokok')
     await Users.update(req.body, {
       where: {
         id: req.params.id,
