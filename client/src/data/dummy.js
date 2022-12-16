@@ -1,8 +1,11 @@
 import React from 'react';
-import { AiOutlineCalendar } from 'react-icons/ai';
-import { BsKanban } from 'react-icons/bs';
+import { AiOutlineCalendar, AiOutlineMessage } from 'react-icons/ai';
+import { FiBarChart, FiCreditCard, FiStar, FiShoppingCart } from 'react-icons/fi';
+import { BsKanban, BsBoxSeam, BsCurrencyDollar, BsShield, BsChatLeft } from 'react-icons/bs';
 import { RiContactsLine } from 'react-icons/ri';
-import { AiOutlineMessage } from 'react-icons/ai';
+import { MdOutlineSupervisorAccount } from 'react-icons/md';
+import { HiOutlineRefresh } from 'react-icons/hi';
+import { TiTick } from 'react-icons/ti';
 import avatar2 from './avatar2.jpg';
 
 export const kanbanGrid = [
