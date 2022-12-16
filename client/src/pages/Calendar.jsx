@@ -6,7 +6,6 @@ import { UserContext } from '../contexts/UserContext';
 
 const Scheduler = () => {
   const {user} = useContext(UserContext);
-  console.log(user && user.admin);
   const [, setScheduleObj] = useState();
 
   const onDragStart = (arg) => {
