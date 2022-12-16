@@ -197,24 +197,26 @@ async function addUserToChannel(userId: any, channelId: any) {
     }
   });
 
-  if (channelId in user.channels) {
-    return {err : true, data: 'already add to this channel'}
-  } else {
-    const channel = await Channels.findOne({
-      where: {
-        id: channelId
-      }
-    })
-
-    if (channel) {
-      user.channels.push(channelId);
-
-      await Users.update({
-        channels: user.channels
-      }, { where: { id: userId } });
-    } else {
-      return {err : true, data: 'channel doesn\'t exist'}
+  for (const element of user.channels) {
+    if (channelId === element) {
+      return {err : true, data: 'already add to this channel'}
     }
+  }
+  
+  const channel = await Channels.findOne({
+    where: {
+      id: channelId
+    }
+  })
+
+  if (channel) {
+    user.channels.push(channelId);
+
+    await Users.update({
+      "channels": user.channels
+    }, { where: { "id": userId } });
+  } else {
+    return {err : true, data: 'channel doesn\'t exist'}
   }
 
   return user;
