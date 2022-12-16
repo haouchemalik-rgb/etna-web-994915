@@ -16,7 +16,7 @@ const Channels = sequelize.define('Channels', {
   messages: {
     type: DataTypes.JSON,
     allowNull: true,
-    default: {},
+    defaultValue: [],
   }
 });
 

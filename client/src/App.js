@@ -1,16 +1,24 @@
+// Importing all dependencies nedded
 import React, { useMemo, useState } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { FiSettings } from 'react-icons/fi';
 import { TooltipComponent } from '@syncfusion/ej2-react-popups';
+
+// Importing jsx pages and components
 import { Navbar, Sidebar, ThemeSettings, Login } from './components';
-import { Calendar, Customers, Kanban , Principal, Message} from './pages';
+import { Calendar, Users, Messagerie, Kanban } from './pages';
 import './App.css';
+
+// Importing context used in the app
 import { useStateContext } from './contexts/ContextProvider';
 import { UserContext } from './contexts/UserContext';
+// import notifyMe from './Notification/Notification';
 
+// react app
 const App = () => {
   const { currentMode, activeMenu, currentColor, themeSettings, setThemeSettings } = useStateContext();
 
+  // setting the variables used with the UserContext Provider
   const [user, setUser] = useState(null);
   const userProvider = useMemo(() => ({user, setUser}), [user, setUser]);
 
@@ -61,16 +69,18 @@ const App = () => {
                 <Routes>
                   <Route path="/" element={<Principal />} />
                   {/* pages  */}
-                  <Route path="/customers" element={<Customers />} />
+                  <Route path="/users" element={<Users/>} />
 
                   {/* apps  */}
-                  <Route path="/message" element={<Message />} />
-                  <Route path="/kanban" element={<Kanban />} />
-                  <Route path="/calendar" element={<Calendar />} />
+                  <Route path="/messagerie" element={<Messagerie/>} />
+                  <Route path="/kanban" element={<Kanban/>} />
+                  <Route path="/calendar" element={<Calendar/>} />
                 </Routes>
               </div>
             </div>
+            {/* <button onClick={notifyMe()}>Notify me!</button> */}
           </div>
+          
           <div hidden={user? true : false}>
             <Login/>
           </div>

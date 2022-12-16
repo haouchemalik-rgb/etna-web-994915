@@ -34,3 +34,22 @@ export const logout = async () => {
     .then((res) => res)
     .catch((err) => err.response);
 }
+
+export const deleteUser = async (userId) => {
+  return await api.delete(`/user/${userId}`)
+    .then((res) => res)
+    .catch((err) => err.response);
+}
+
+export const addUser = async (user) => {
+  return await api.post(`/user/register`, user)
+    .then((res) => res)
+    .catch((err) => err.response);
+}
+
+export const editUser = async (user) => {
+  const userId = user.id;
+  return await api.patch(`/user/${userId}`, user)
+    .then((res) => res)
+    .catch((err) => err.response);
+}
